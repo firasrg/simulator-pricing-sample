@@ -1,5 +1,5 @@
 import React from "react";
-import {fakeAuthProvider} from "../businessLogic/authProvider.ts";
+import {tempAuthProvider} from "../businessLogic/authProvider.ts";
 import {AuthContext} from "../contexts/AuthContext.ts";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -7,14 +7,14 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [user, setUser] = React.useState<unknown>(null);
 
     const signin = (newUser: string, callback: VoidFunction) => {
-        return fakeAuthProvider.signin(() => {
+        return tempAuthProvider.signin(() => {
             setUser(newUser);
             callback();
         });
     };
 
     const signout = (callback: VoidFunction) => {
-        return fakeAuthProvider.signout(() => {
+        return tempAuthProvider.signout(() => {
             setUser(null);
             callback();
         });

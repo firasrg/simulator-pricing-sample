@@ -2,16 +2,16 @@ function executeAsync(callback: VoidFunction) {
     setTimeout(callback, 200);
 }
 
-const fakeAuthProvider = {
+const tempAuthProvider = {
     isAuthenticated: false,
     signin(callback: VoidFunction) {
-        fakeAuthProvider.isAuthenticated = true;
+        tempAuthProvider.isAuthenticated = true;
         executeAsync(callback); // fake async
     },
     signout(callback: VoidFunction) {
-        fakeAuthProvider.isAuthenticated = false;
+        tempAuthProvider.isAuthenticated = false;
         executeAsync(callback);
     },
 };
 
-export { fakeAuthProvider };
+export { tempAuthProvider };

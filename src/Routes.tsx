@@ -1,16 +1,15 @@
 // Routes.tsx
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
+import PageDashboard from './pages/PageDashboard.tsx';
 import RequireAuth from "./components/RequireAuth.tsx";
+import PageLogin from "./pages/PageLogin.tsx";
 
 const RoutesWire = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<RequireAuth/>}/>
-                <Route path="/login" Component={Login}/>
-                <Route path="/dashboard" element={<RequireAuth><Dashboard/></RequireAuth>}/>
+                <Route path="/login" Component={PageLogin}/>
+                <Route path="/" element={<RequireAuth><PageDashboard/></RequireAuth>}/>
             </Routes>
         </Router>
     );
