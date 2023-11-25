@@ -9,16 +9,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ClearAllIcon from '@mui/icons-material/ClearAll';
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import {MainListItems, SecondaryListItems} from "../components/ListItems.tsx";
+import {MainListItems} from "../components/ListItems.tsx";
 import Box from "@mui/material/Box";
-import {useAuth} from "../hooks/useAuth.ts";
 import {useNavigate} from "react-router-dom";
+import {clearData, signOut} from "@app-redux/slices/authSlice.ts";
+import {useAppDispatch} from "@app-redux/reduxHooks.ts";
 
 const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement => {
 
-    const {signout} = useAuth();
+    const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
 
     const [open, setOpen] = React.useState(true);
@@ -55,10 +58,16 @@ const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement 
                     </Typography>
                     <IconButton
                         color="inherit"
-                        onClick={() => {
-                            signout(() => navigate("/login"))
-                        }}
+                        onClick={() => dispatch(clearData())}
                     >
+                        <ClearAllIcon/>
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                        onClick={ () => {
+                            dispatch(signOut());
+                            navigate("/login");
+                        }}                    >
                         <LogoutIcon/>
                     </IconButton>
                 </Toolbar>
@@ -80,7 +89,6 @@ const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement 
                 <List component="nav">
                     <MainListItems/>
                     <Divider sx={{my: 1}}/>
-                    <SecondaryListItems/>
                 </List>
             </Drawer>
             <main style={{flex:1}}>{children}</main>

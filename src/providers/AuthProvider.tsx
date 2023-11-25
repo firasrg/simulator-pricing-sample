@@ -1,5 +1,5 @@
 import React from "react";
-import {tempAuthProvider} from "../businessLogic/authProvider.ts";
+import {tempAuthProvider} from "./tempAuthProvider.ts";
 import {AuthContext} from "../contexts/AuthContext.ts";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
