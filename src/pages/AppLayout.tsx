@@ -8,22 +8,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ClearAllIcon from '@mui/icons-material/ClearAll';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import {MainListItems} from "../components/ListItems";
 import Box from "@mui/material/Box";
 import {useNavigate} from "react-router-dom";
-import {clearData, signOut} from "@app-redux/slices/authSlice";
+import {clearData} from "@app-redux/slices/authSlice";
 import {useAppDispatch} from "@app-redux/reduxHooks";
+import {useAuth} from "../hooks/useAuth";
 
 const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement => {
+
+    const auth = useAuth();
 
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -53,20 +56,15 @@ const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement 
                         noWrap
                         sx={{flexGrow: 1}}
                     >
-                        Dashboard
+                        Quotation Panel
                     </Typography>
                     <IconButton
                         color="inherit"
                         onClick={() => dispatch(clearData())}
                     >
-                        <ClearAllIcon/>
+                        <DeleteForeverIcon/>
                     </IconButton>
-                    <IconButton
-                        color="inherit"
-                        onClick={ () => {
-                            dispatch(signOut());
-                            navigate("/login");
-                        }}                    >
+                    <IconButton color="inherit" onClick={() => auth.signout(() => navigate("/login"))}>
                         <LogoutIcon/>
                     </IconButton>
                 </Toolbar>

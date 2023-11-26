@@ -11,7 +11,7 @@ const initialState: IStateMedicalAct = {
     list: [],
 }
 
-export const guaranteeSlice = createSlice({
+export const medicalActSlice = createSlice({
     name: 'medicalAct',
     initialState,
     reducers: {
@@ -24,7 +24,7 @@ export const guaranteeSlice = createSlice({
     }
 })
 
-export const { setMedicalActList } = guaranteeSlice.actions;
+export const { setMedicalActList } = medicalActSlice.actions;
 export const medicalAct = (state: RootState) => state.medicalAct;
 
-export default guaranteeSlice.reducer;
+export default medicalActSlice.reducer;

@@ -3,7 +3,6 @@ import {RootState} from "@app-redux/models";
 import {clearData} from "@app-redux/slices/authSlice";
 import {IGuarantee} from "@forms/GuaranteeForm";
 
-
 interface IStateGuarantee {
     list: IGuarantee[]
 }

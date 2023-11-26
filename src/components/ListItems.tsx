@@ -15,7 +15,7 @@ export const MainListItems = () => {
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Quotation Panel" />
         </ListItemButton>
 
     </React.Fragment>
