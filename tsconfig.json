@@ -8,7 +8,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,7 +20,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@app-redux/*": ["./src/@app-redux/*"]
+      "@app-redux/*": ["./src/@app-redux/*"],
+      "@lists/*": ["./src/lists/*"],
+      "@forms/*": ["./src/forms/*"]
     }
   },
   "include": ["src"],

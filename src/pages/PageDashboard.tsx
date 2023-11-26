@@ -4,56 +4,36 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Layout from "./AppLayout.tsx";
+import Layout from "./AppLayout";
 import ProductForm, {IProduct} from '../forms/ProductForm';
 import ProductList from '../lists/ProductList';
-import GuaranteeForm, {IGuarantee} from '../forms/GuaranteeForm';
+import GuaranteeForm from '../forms/GuaranteeForm';
 import GuaranteeList from '../lists/GuaranteeList';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MedicalActList, {IMedicalAct} from "../lists/MedicalActsList.tsx";
-import MedicalActForm from "../forms/MedicalActForm.tsx";
-import ProcessForm, {IProcess} from "../forms/ProcessForm.tsx";
-import ProcessList from "../lists/ProcessList.tsx";
-import ProcessStepTypeInsured from "../forms/ProcessStepTypeInsured.tsx";
-import {product, selectProduct, setProductList} from "@app-redux/slices/productSlice.ts";
-import {useAppDispatch, useAppSelector} from "@app-redux/reduxHooks.ts";
+import MedicalActList from "../lists/MedicalActsList";
+import MedicalActForm from "../forms/MedicalActForm";
+import ProcessForm, {IProcess} from "../forms/ProcessForm";
+import ProcessList from "../lists/ProcessList";
+import ProcessStepTypeInsured from "../forms/ProcessStepTypeInsured";
+import {product, selectProduct, setProductList} from "@app-redux/slices/productSlice";
+import {useAppDispatch, useAppSelector} from "@app-redux/reduxHooks";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import {guarantee, setGuaranteeList} from "@app-redux/slices/guaranteeSlice";
+import {medicalAct, setMedicalActList} from "@app-redux/slices/medicalActSlice";
 
 export default function PageDashboard() {
-    // State to manage the list of products and guarantees
-    // const [products, setProducts] = useState<IProduct[]>([]);
-    const [guarantees, setGuarantees] = useState<IGuarantee[]>([]);
-    const [medicalActs, setMedicalActs] = useState<IMedicalAct[]>([]);
+
     const [processes, setProcesses] = useState<IProcess[]>([]);
-    // const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 
-    // TODO: use redux for state management
     const {list: products, selected: selectedProduct} = useAppSelector(product);
+    const {list: guarantees} = useAppSelector(guarantee);
+    const {list: medicalActs} = useAppSelector(medicalAct);
+
     const dispatch = useAppDispatch();
-
-    // Function to handle product creation
-    // Function to handle product creation
-    const handleProductSubmit = (product: IProduct) => {
-        dispatch(setProductList([...products, product]));
-        // Update local storage with the new products
-        // localStorage.setItem('products', JSON.stringify([...products, product]));
-    };
-
-    // Function to handle guarantee creation
-    const handleGuaranteeSubmit = (guarantee: IGuarantee) => {
-        setGuarantees([...guarantees, guarantee]);
-        // Update local storage with the new guarantees
-        // localStorage.setItem('guarantees', JSON.stringify([...guarantees, guarantee]));
-    };
-
-    // Function to handle medical act creation
-    const handleMedicalActSubmit = (medicalAct: IMedicalAct) => {
-        setMedicalActs([...medicalActs, medicalAct]);
-        // Update local storage with the new medical acts
-        // localStorage.setItem('medicalActs', JSON.stringify([...medicalActs, medicalAct]));
-    };
 
     // Function to handle process creation
     const handleProcessSubmit = (process: IProcess) => {
@@ -86,19 +66,17 @@ export default function PageDashboard() {
                                     {/* Product Form */}
                                     <Grid item xs={6}>
                                         <Paper sx={{p: 2, display: "flex", flexDirection: "column"}}>
-                                            <Typography variant="h6" gutterBottom>
-                                                Create Product
-                                            </Typography>
-                                            <ProductForm onSubmit={handleProductSubmit}
-                                                         existingGuarantees={guarantees.map(g => g.name)}/>
+                                            <Typography variant="h6" gutterBottom>Create Product</Typography>
+                                            <ProductForm
+                                                onSubmit={() => dispatch(setProductList([...products, product]))}
+                                                existingGuarantees={guarantees.map(g => g.name)}
+                                            />
                                         </Paper>
                                     </Grid>
                                     {/* Product List */}
                                     <Grid item xs={6}>
                                         <Paper sx={{p: 2, display: "flex", flexDirection: "column"}}>
-                                            <Typography variant="h6" gutterBottom>
-                                                Product List
-                                            </Typography>
+                                            <Typography variant="h6" gutterBottom>Product List</Typography>
                                             <ProductList products={products}/>
                                         </Paper>
                                     </Grid>
@@ -124,8 +102,10 @@ export default function PageDashboard() {
                                             <Typography variant="h6" gutterBottom>
                                                 Create Guarantee
                                             </Typography>
-                                            <GuaranteeForm onSubmit={handleGuaranteeSubmit}
-                                                           existingMedicalActs={medicalActs.map(ma => ma.name)}/>
+                                            <GuaranteeForm
+                                                onSubmit={() => dispatch(setGuaranteeList([...guarantees, guarantee]))}
+                                                existingMedicalActs={medicalActs.map(ma => ma.name)}
+                                            />
                                         </Paper>
                                     </Grid>
                                     {/* Guarantee List */}
@@ -159,7 +139,7 @@ export default function PageDashboard() {
                                             <Typography variant="h6" gutterBottom>
                                                 Create Medical Act
                                             </Typography>
-                                            <MedicalActForm onSubmit={handleMedicalActSubmit}/>
+                                            <MedicalActForm onSubmit={() => dispatch(setMedicalActList([...medicalActs, medicalAct]))}/>
                                         </Paper>
                                     </Grid>
                                     {/* Medical Act List */}
@@ -213,21 +193,42 @@ export default function PageDashboard() {
                     {/* Quotation Demo Section */}
                     <Grid item xs={12}>
                         <Accordion>
-                            <AccordionSummary expandIcon={<ExpandMoreIcon/>}
-                                              aria-controls="quotation-demo-panel-content"
-                                              id="quotation-demo-panel-header">
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls="quotation-demo-panel-content"
+                                id="quotation-demo-panel-header"
+                            >
                                 <Typography variant="h5">Quotation Demo Section</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Grid container spacing={3}>
                                     {
                                         !selectedProduct ? (
-                                            <Grid item xs={6}>
-                                                <Paper sx={{p: 2, display: "flex", flexDirection: "column"}}>
+                                            <Grid item xs={12}>
+                                                <Paper sx={{
+                                                    p: 2,
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    alignItems: 'center'
+                                                }}>
                                                     <Typography variant="h6" gutterBottom>
-                                                        Product List
+                                                        Select Your Path
                                                     </Typography>
-                                                    <ProductList products={products} onItemClick={handleProductClick}/>
+                                                    <Box display={"flex"} gap={5}>
+                                                        {
+                                                            products.map(p => (
+                                                                    <Button onClick={() => handleProductClick(p)}
+                                                                            size="large"
+                                                                            color={"primary"}
+                                                                            style={{backgroundColor: '#62F5C868'}}>
+                                                                        <Typography variant="h5" component="div">
+                                                                            {p.name}
+                                                                        </Typography>
+                                                                    </Button>
+                                                                )
+                                                            )
+                                                        }
+                                                    </Box>
                                                 </Paper>
                                             </Grid>
                                         ) : (

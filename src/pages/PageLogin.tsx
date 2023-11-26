@@ -12,12 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {useLocation, useNavigate} from "react-router-dom";
-import {useAuth} from "../hooks/useAuth.ts";
+import {useAuth} from "../hooks/useAuth";
 
 export default function PageLogin() {
 
     const navigate = useNavigate();
     const location = useLocation();
+
     const auth = useAuth();
 
     const from = location.state?.from?.pathname || "/";

@@ -1,26 +1,26 @@
 import React from "react";
-import {tempAuthProvider} from "./tempAuthProvider.ts";
-import {AuthContext} from "../contexts/AuthContext.ts";
+import {AuthContext} from "../contexts/AuthContext";
+import {useAppDispatch} from "@app-redux/reduxHooks";
+import {setUsername} from "@app-redux/slices/authSlice";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
 
-    const [user, setUser] = React.useState<unknown>("fires@test.com");
+    const dispatch = useAppDispatch();
 
-    const signin = (newUser: string, callback: VoidFunction) => {
-        return tempAuthProvider.signin(() => {
-            setUser(newUser);
-            callback();
-        });
+    // const [user, setUser] = React.useState<unknown>("fires@test.com");
+
+    const signin = (username: string, callback: VoidFunction) => {
+        dispatch(setUsername(username));
+        callback();
     };
 
     const signout = (callback: VoidFunction) => {
-        return tempAuthProvider.signout(() => {
-            setUser(null);
-            callback();
-        });
+        dispatch(setUsername(null));
+        callback();
+
     };
 
-    const value = { user, signin, signout };
+    const value = { signin, signout };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

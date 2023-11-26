@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IProduct} from "../../forms/ProductForm.tsx";
-import {RootState} from "@app-redux/models.ts";
-import {clearData} from "@app-redux/slices/authSlice.ts";
+import {IProduct} from "@forms/ProductForm";
+import {RootState} from "@app-redux/models";
+import {clearData} from "@app-redux/slices/authSlice";
 
 interface IStateProduct {
     list: IProduct[],

@@ -10,7 +10,7 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
-import Layout from "./AppLayout.tsx";
+import Layout from "./AppLayout";
 import Container from "@mui/material/Container";
 const categories = [
     {id: 1, name: 'Category 1'},

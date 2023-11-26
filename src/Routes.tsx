@@ -1,9 +1,9 @@
 // Routes.tsx
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import PageDashboard from './pages/PageDashboard.tsx';
-import RequireAuth from "./components/RequireAuth.tsx";
-import PageLogin from "./pages/PageLogin.tsx";
-import PageListCategories from "./pages/PageListCategories.tsx";
+import PageDashboard from './pages/PageDashboard';
+import RequireAuth from "./components/RequireAuth";
+import PageLogin from "./pages/PageLogin";
+import PageListCategories from "./pages/PageListCategories";
 
 const RoutesWire = () => {
     return (

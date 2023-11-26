@@ -1,8 +1,7 @@
-// Layout.jsx
 import React from 'react';
-import Drawer from '../components/Drawer.tsx'; // Import your topbar and drawer components
+import Drawer from '../components/Drawer';
 import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "../components/AppBar.tsx";
+import AppBar from "../components/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -12,11 +11,11 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import {MainListItems} from "../components/ListItems.tsx";
+import {MainListItems} from "../components/ListItems";
 import Box from "@mui/material/Box";
 import {useNavigate} from "react-router-dom";
-import {clearData, signOut} from "@app-redux/slices/authSlice.ts";
-import {useAppDispatch} from "@app-redux/reduxHooks.ts";
+import {clearData, signOut} from "@app-redux/slices/authSlice";
+import {useAppDispatch} from "@app-redux/reduxHooks";
 
 const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement => {
 
