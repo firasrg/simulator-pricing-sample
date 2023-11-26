@@ -12,12 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {useLocation, useNavigate} from "react-router-dom";
-import {useAuth} from "../hooks/useAuth.ts";
+import {useAuth} from "../hooks/useAuth";
 
 export default function PageLogin() {
 
     const navigate = useNavigate();
     const location = useLocation();
+
     const auth = useAuth();
 
     const from = location.state?.from?.pathname || "/";
@@ -28,19 +29,17 @@ export default function PageLogin() {
         const formData = new FormData(event.currentTarget);
         const username = formData.get("username") as string;
 
-        console.log('email: ', username);
+        // console.log('email: ', username);
 
-        auth.signin(username, () => {
-            navigate(from, {replace: true});
-        });
+        auth.signin(username, () => navigate(from, {replace: true}) );
     }
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
             <Box sx={{marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                    <LockOutlinedIcon/>
+                <Avatar sx={{m: 1, bgcolor: 'gray'}}>
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in

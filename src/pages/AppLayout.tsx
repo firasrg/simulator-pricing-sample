@@ -1,27 +1,32 @@
-// Layout.jsx
 import React from 'react';
-import Drawer from '../components/Drawer.tsx'; // Import your topbar and drawer components
+import Drawer from '../components/Drawer';
 import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "../components/AppBar.tsx";
+import AppBar from "../components/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
-import {MainListItems, SecondaryListItems} from "../components/ListItems.tsx";
+import {MainListItems} from "../components/ListItems";
 import Box from "@mui/material/Box";
-import {useAuth} from "../hooks/useAuth.ts";
 import {useNavigate} from "react-router-dom";
+import {clearData} from "@app-redux/slices/authSlice";
+import {useAppDispatch} from "@app-redux/reduxHooks";
+import {useAuth} from "../hooks/useAuth";
 
 const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement => {
 
-    const {signout} = useAuth();
+    const auth = useAuth();
+
+    const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -51,14 +56,15 @@ const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement 
                         noWrap
                         sx={{flexGrow: 1}}
                     >
-                        Dashboard
+                        Quotation Panel
                     </Typography>
                     <IconButton
                         color="inherit"
-                        onClick={() => {
-                            signout(() => navigate("/login"))
-                        }}
+                        onClick={() => dispatch(clearData())}
                     >
+                        <DeleteForeverIcon/>
+                    </IconButton>
+                    <IconButton color="inherit" onClick={() => auth.signout(() => navigate("/login"))}>
                         <LogoutIcon/>
                     </IconButton>
                 </Toolbar>
@@ -80,7 +86,6 @@ const Layout = ({ children }: {children?: React.ReactNode}): React.ReactElement 
                 <List component="nav">
                     <MainListItems/>
                     <Divider sx={{my: 1}}/>
-                    <SecondaryListItems/>
                 </List>
             </Drawer>
             <main style={{flex:1}}>{children}</main>

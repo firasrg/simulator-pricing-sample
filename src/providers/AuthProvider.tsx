@@ -1,26 +1,25 @@
 import React from "react";
-import {tempAuthProvider} from "../businessLogic/authProvider.ts";
-import {AuthContext} from "../contexts/AuthContext.ts";
+import {AuthContext} from "../contexts/AuthContext";
+import {useAppDispatch} from "@app-redux/reduxHooks";
+import {signIn, signOut} from "@app-redux/slices/authSlice";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
 
-    const [user, setUser] = React.useState<unknown>("fires@test.com");
+    const dispatch = useAppDispatch();
 
-    const signin = (newUser: string, callback: VoidFunction) => {
-        return tempAuthProvider.signin(() => {
-            setUser(newUser);
-            callback();
-        });
+    // const [user, setUser] = React.useState<unknown>("fires@test.com");
+
+    const signin = (username: string, navigationCallback: VoidFunction) => {
+        dispatch(signIn(username));
+        navigationCallback();
     };
 
-    const signout = (callback: VoidFunction) => {
-        return tempAuthProvider.signout(() => {
-            setUser(null);
-            callback();
-        });
+    const signout = (navigationCallback: VoidFunction) => {
+        dispatch(signOut());
+        navigationCallback();
     };
 
-    const value = { user, signin, signout };
+    const value = { signin, signout };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
