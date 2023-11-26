@@ -1,21 +1,24 @@
-import {ReactNode} from "react";
-import {Navigate, useLocation} from "react-router-dom";
-import {useAppSelector} from "@app-redux/reduxHooks";
-import {auth as selectAuth} from "@app-redux/slices/authSlice";
+import { ReactNode } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
-export default function RequireAuth({ child }: { child?: ReactNode}) {
+import { useAuth } from '../hooks/useAuth';
 
-    const auth = useAppSelector(selectAuth);
+export interface IRequireAuthProps {
+  child?: ReactNode;
+}
 
-    const location = useLocation();
+export default function RequireAuth({ child }: IRequireAuthProps) {
+  const auth = useAuth();
 
-    if (!auth.username || !child) {
-        // Redirect them to the /login page, but save the current location they were
-        // trying to go to when they were redirected. This allows us to send them
-        // along to that page after they login, which is a nicer user experience
-        // than dropping them off on the home page.
-        return <Navigate to="/login" state={{ from: location }} replace />;
-    }
+  const location = useLocation();
 
-    return child;
+  if (!auth.username || !child) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return child;
 }

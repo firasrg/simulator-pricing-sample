@@ -4,20 +4,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const MainListItems = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
+  return (
     <React.Fragment>
-        <ListItemButton onClick={() => navigate("/dashboard",{replace: true})}>
-            <ListItemIcon>
-                <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Quotation Panel" />
-        </ListItemButton>
-
+      <ListItemButton onClick={() => navigate('/dashboard', { replace: true })}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Quotation Panel" />
+      </ListItemButton>
     </React.Fragment>
-)
+  );
 };

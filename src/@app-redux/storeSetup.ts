@@ -1,21 +1,21 @@
-import {configureStore, combineReducers} from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist'
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
 import product from '@app-redux/slices/productSlice';
 import guarantee from '@app-redux/slices/guaranteeSlice';
-import auth from "@app-redux/slices/authSlice";
-import medicalAct from "@app-redux/slices/medicalActSlice";
-import process from "@app-redux/slices/processSlice";
-import storage from 'redux-persist/lib/storage'
+import auth from '@app-redux/slices/authSlice';
+import medicalAct from '@app-redux/slices/medicalActSlice';
+import process from '@app-redux/slices/processSlice';
+import storage from 'redux-persist/lib/storage';
 
-const reducers = combineReducers({product, auth, guarantee, medicalAct, process});
+const reducers = combineReducers({ product, auth, guarantee, medicalAct, process });
 
 const persistConfig = {
-    key: 'root',
-    storage
-}
+  key: 'root',
+  storage
+};
 
-const persistedReducer = persistReducer(persistConfig, reducers)
+const persistedReducer = persistReducer(persistConfig, reducers);
 
-export const store = configureStore({reducer: persistedReducer, devTools:true});
+export const store = configureStore({ reducer: persistedReducer, devTools: true });
 
 export const persistor = persistStore(store);

@@ -22,7 +22,8 @@
     "paths": {
       "@app-redux/*": ["./src/@app-redux/*"],
       "@lists/*": ["./src/lists/*"],
-      "@forms/*": ["./src/forms/*"]
+      "@forms/*": ["./src/forms/*"],
+      "@models/*": ["./src/models/*"]
     }
   },
   "include": ["src"],

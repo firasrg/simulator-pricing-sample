@@ -1,0 +1,40 @@
+# Ignore all files in the node_modules directory
+node_modules/
+
+# Ignore coverage reports
+coverage/
+
+# Ignore configuration files
+.stylelintrc
+
+# Ignore images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Ignore binary files
+*.woff
+*.woff2
+*.eot
+*.ttf
+
+# Ignore log files
+*.log
+
+# Ignore Git related files
+.gitignoreg
+
+# Ignore temporary files
+*.swp
+*.swo
+*.swn
+
+# vite
+vite.config.ts
+
+# package managers
+package.json
+yarn.lock
+package-lock.json

@@ -1,0 +1,7 @@
+# Ignore build artifacts
+build/
+
+# Ignore configuration files
+.eslintrc
+
+vite.config.ts

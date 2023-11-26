@@ -1,26 +1,26 @@
-import React from 'react';
+import { IProduct } from '@forms/ProductForm';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import {IProduct} from "@forms/ProductForm";
+import React from 'react';
 
 interface ProductListProps {
-    products: IProduct[];
+  products: IProduct[];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products  }) => {
-    return (
-        <List>
-            {products.map((product, index) => (
-                <ListItem key={index}>
-                    <ListItemText
-                        primary={product.name}
-                        secondary={`Description: ${product.description}, Currency: ${product.currency}, Zone: ${product.zone}`}
-                    />
-                </ListItem>
-            ))}
-        </List>
-    );
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
+  return (
+    <List>
+      {products.map((product, index) => (
+        <ListItem key={index}>
+          <ListItemText
+            primary={product.name}
+            secondary={`Description: ${product.description}, Currency: ${product.currency}, Zone: ${product.zone}`}
+          />
+        </ListItem>
+      ))}
+    </List>
+  );
 };
 
 export default ProductList;
