@@ -16,25 +16,27 @@ import GuaranteeForm from '@forms/GuaranteeForm';
 import GuaranteeList from '@lists/GuaranteeList';
 import MedicalActList from '@lists/MedicalActsList';
 import MedicalActForm from '@forms/MedicalActForm';
-import ProcessForm from '@forms/ProcessForm';
-import ProcessList from '@lists/ProcessList';
 import ProcessStepTypeInsured from '@forms/ProcessStepTypeInsured';
 import { product, setProductList } from '@app-redux/slices/productSlice';
 import { useAppDispatch, useAppSelector } from '@app-redux/reduxHooks';
 import { guarantee, setGuaranteeList } from '@app-redux/slices/guaranteeSlice';
 import { medicalAct, setMedicalActList } from '@app-redux/slices/medicalActSlice';
-import { process, setProcessList } from '@app-redux/slices/processSlice';
 import Layout from './AppLayout';
+import { EDashboardSection } from '@models/enums/EDashboardSection';
 
 export default function PageDashboard() {
+  const [expanded, setExpanded] = useState<EDashboardSection | null>(null);
   const [, selectProd] = useState<IProduct | null>(null);
 
   const { list: products, selected: selectedProduct } = useAppSelector(product);
   const { list: guarantees } = useAppSelector(guarantee);
   const { list: medicalActs } = useAppSelector(medicalAct);
-  const { list: processes } = useAppSelector(process);
 
   const dispatch = useAppDispatch();
+
+  function computeExpanded(toCompareWith: EDashboardSection) {
+    return expanded === toCompareWith ? null : toCompareWith;
+  }
 
   return (
     <Layout>
@@ -43,7 +45,9 @@ export default function PageDashboard() {
         <Grid container spacing={3}>
           {/* Product Section */}
           <Grid item xs={12}>
-            <Accordion>
+            <Accordion
+              expanded={EDashboardSection.PRODUCTS === expanded}
+              onChange={() => setExpanded(computeExpanded(EDashboardSection.PRODUCTS))}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="product-panel-content"
@@ -81,7 +85,9 @@ export default function PageDashboard() {
           </Grid>
           {/* Guarantee Section */}
           <Grid item xs={12}>
-            <Accordion>
+            <Accordion
+              expanded={EDashboardSection.GUARANTEES === expanded}
+              onChange={() => setExpanded(computeExpanded(EDashboardSection.GUARANTEES))}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="guarantee-panel-content"
@@ -119,7 +125,9 @@ export default function PageDashboard() {
           </Grid>
           {/* Medical Act Section */}
           <Grid item xs={12}>
-            <Accordion>
+            <Accordion
+              expanded={EDashboardSection.MEDICAL_ACTS === expanded}
+              onChange={() => setExpanded(computeExpanded(EDashboardSection.MEDICAL_ACTS))}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="medical-act-panel-content"
@@ -154,47 +162,11 @@ export default function PageDashboard() {
               </AccordionDetails>
             </Accordion>
           </Grid>
-
-          {/* Process Section */}
-          <Grid item xs={12}>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="process-panel-content"
-                id="process-panel-header">
-                <Typography variant="h5">Process Section</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={3}>
-                  {/* Process Form */}
-                  <Grid item xs={6}>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                      <Typography variant="h6" gutterBottom>
-                        Create Process
-                      </Typography>
-                      <ProcessForm
-                        onSubmit={(newProcess) =>
-                          dispatch(setProcessList([...processes, newProcess]))
-                        }
-                      />
-                    </Paper>
-                  </Grid>
-                  {/* Process List */}
-                  <Grid item xs={6}>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                      <Typography variant="h6" gutterBottom>
-                        Process List
-                      </Typography>
-                      <ProcessList processes={processes} />
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Grid>
           {/* Quotation Demo Section */}
           <Grid item xs={12}>
-            <Accordion>
+            <Accordion
+              expanded={EDashboardSection.DEMO === expanded}
+              onChange={() => setExpanded(computeExpanded(EDashboardSection.DEMO))}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="quotation-demo-panel-content"

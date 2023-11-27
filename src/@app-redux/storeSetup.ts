@@ -4,10 +4,9 @@ import product from '@app-redux/slices/productSlice';
 import guarantee from '@app-redux/slices/guaranteeSlice';
 import auth from '@app-redux/slices/authSlice';
 import medicalAct from '@app-redux/slices/medicalActSlice';
-import process from '@app-redux/slices/processSlice';
 import storage from 'redux-persist/lib/storage';
 
-const reducers = combineReducers({ product, auth, guarantee, medicalAct, process });
+const reducers = combineReducers({ product, auth, guarantee, medicalAct });
 
 const persistConfig = {
   key: 'root',
