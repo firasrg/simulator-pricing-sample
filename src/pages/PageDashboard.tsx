@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -10,25 +10,27 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import ProductForm, { IProduct } from '@forms/ProductForm';
+import ProductForm from '@forms/ProductForm';
 import ProductList from '@lists/ProductList';
-import GuaranteeForm from '@forms/GuaranteeForm';
+import GuaranteeForm from '@forms/guarantee/GuaranteeForm';
 import GuaranteeList from '@lists/GuaranteeList';
 import MedicalActList from '@lists/MedicalActsList';
 import MedicalActForm from '@forms/MedicalActForm';
-import ProcessStepTypeInsured from '@forms/ProcessStepTypeInsured';
-import { product, setProductList } from '@app-redux/slices/productSlice';
+import ProcessStepTypeInsured from '@forms/steps/ProcessStepTypeInsured';
+import { deleteProduct, product, setProductList } from '@app-redux/slices/productSlice';
 import { useAppDispatch, useAppSelector } from '@app-redux/reduxHooks';
 import { guarantee, setGuaranteeList } from '@app-redux/slices/guaranteeSlice';
 import { medicalAct, setMedicalActList } from '@app-redux/slices/medicalActSlice';
 import Layout from './AppLayout';
 import { EDashboardSection } from '@models/enums/EDashboardSection';
+import { IProduct } from '@models/IProduct';
+import { NULL_VALUE } from '@constants/values';
 
 export default function PageDashboard() {
   const [expanded, setExpanded] = useState<EDashboardSection | null>(null);
-  const [, selectProd] = useState<IProduct | null>(null);
+  const [selectedPath, selectPath] = useState<IProduct | null>(null);
 
-  const { list: products, selected: selectedProduct } = useAppSelector(product);
+  const { list: products } = useAppSelector(product);
   const { list: guarantees } = useAppSelector(guarantee);
   const { list: medicalActs } = useAppSelector(medicalAct);
 
@@ -37,6 +39,11 @@ export default function PageDashboard() {
   function computeExpanded(toCompareWith: EDashboardSection) {
     return expanded === toCompareWith ? null : toCompareWith;
   }
+
+  const guaranteesNonNullableList = useMemo(
+    () => guarantees.filter((g) => g !== NULL_VALUE).map((g) => g.name) as string[],
+    [guarantees]
+  );
 
   return (
     <Layout>
@@ -63,10 +70,8 @@ export default function PageDashboard() {
                         Create Product
                       </Typography>
                       <ProductForm
-                        onSubmit={(newProduct) =>
-                          dispatch(setProductList([...products, newProduct]))
-                        }
-                        existingGuarantees={guarantees.map((g) => g.name)}
+                        onSubmit={(newProduct) => dispatch(setProductList([...products, newProduct]))}
+                        existingGuarantees={guaranteesNonNullableList}
                       />
                     </Paper>
                   </Grid>
@@ -76,7 +81,10 @@ export default function PageDashboard() {
                       <Typography variant="h6" gutterBottom>
                         Product List
                       </Typography>
-                      <ProductList products={products} />
+                      <ProductList
+                        products={products}
+                        onDelete={(productName) => dispatch(deleteProduct(productName))}
+                      />
                     </Paper>
                   </Grid>
                 </Grid>
@@ -103,9 +111,7 @@ export default function PageDashboard() {
                         Create Guarantee
                       </Typography>
                       <GuaranteeForm
-                        onSubmit={(newGuarantee) =>
-                          dispatch(setGuaranteeList([...guarantees, newGuarantee]))
-                        }
+                        onSubmit={(newGuarantee) => dispatch(setGuaranteeList([...guarantees, newGuarantee]))}
                         existingMedicalActs={medicalActs.map((ma) => ma.name)}
                       />
                     </Paper>
@@ -143,9 +149,7 @@ export default function PageDashboard() {
                         Create Medical Act
                       </Typography>
                       <MedicalActForm
-                        onSubmit={(newMedicalAct) =>
-                          dispatch(setMedicalActList([...medicalActs, newMedicalAct]))
-                        }
+                        onSubmit={(newMedicalAct) => dispatch(setMedicalActList([...medicalActs, newMedicalAct]))}
                       />
                     </Paper>
                   </Grid>
@@ -175,7 +179,7 @@ export default function PageDashboard() {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={3}>
-                  {!selectedProduct ? (
+                  {!selectedPath ? (
                     <Grid item xs={12}>
                       <Paper
                         sx={{
@@ -187,12 +191,12 @@ export default function PageDashboard() {
                         <Typography variant="h6" gutterBottom>
                           Select Your Path
                         </Typography>
-                        <Box display={'flex'} gap={5}>
+                        <Box display="flex" gap={5}>
                           {products.map((p) => (
                             <Button
-                              onClick={() => selectProd(p)}
+                              onClick={() => selectPath(p)}
                               size="large"
-                              color={'primary'}
+                              color="primary"
                               style={{ backgroundColor: '#62F5C868' }}>
                               <Typography variant="h5" component="div">
                                 {p.name}
@@ -205,9 +209,6 @@ export default function PageDashboard() {
                   ) : (
                     <Grid item xs={6}>
                       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant="h6" gutterBottom>
-                          Who do you want to insure?
-                        </Typography>
                         <ProcessStepTypeInsured onChange={() => null} />
                       </Paper>
                     </Grid>

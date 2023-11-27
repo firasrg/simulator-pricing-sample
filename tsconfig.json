@@ -23,7 +23,8 @@
       "@app-redux/*": ["./src/@app-redux/*"],
       "@lists/*": ["./src/lists/*"],
       "@forms/*": ["./src/forms/*"],
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@constants/*": ["./src/constants/*"]
     }
   },
   "include": ["src"],

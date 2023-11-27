@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { IMedicalAct } from '@lists/MedicalActsList';
+import { IMedicalAct } from '@models/IMedicalAct';
 
 interface MedicalActFormProps {
   onSubmit: (medicalAct: IMedicalAct) => void;

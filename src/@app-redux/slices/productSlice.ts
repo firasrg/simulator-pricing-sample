@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IProduct } from '@forms/ProductForm';
 import { RootState } from '@app-redux/models';
 import { clearData } from '@app-redux/slices/authSlice';
+import { IProduct } from '@models/IProduct';
 
 interface IStateProduct {
   list: IProduct[];
-  selected: IProduct['name'] | null;
 }
 
 const initialState: IStateProduct = {
-  list: [],
-  selected: null
+  list: []
 };
 
 export const productSlice = createSlice({
@@ -20,8 +18,8 @@ export const productSlice = createSlice({
     setProductList: (state, action) => {
       state.list = action.payload;
     },
-    selectProduct: (state, action) => {
-      state.selected = action.payload;
+    deleteProduct: (state, action) => {
+      state.list = state.list.filter((p) => p.name !== action.payload);
     }
   },
   extraReducers: (builder) => {
@@ -29,7 +27,7 @@ export const productSlice = createSlice({
   }
 });
 
-export const { setProductList, selectProduct } = productSlice.actions;
+export const { setProductList, deleteProduct } = productSlice.actions;
 export const product = (state: RootState) => state.product;
 
 export default productSlice.reducer;
