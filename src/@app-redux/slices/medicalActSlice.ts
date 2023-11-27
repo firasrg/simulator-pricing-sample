@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@app-redux/models';
 import { clearData } from '@app-redux/slices/authSlice';
-import { IMedicalAct } from '@lists/MedicalActsList';
+import { IMedicalAct } from '@models/IMedicalAct';
 
 interface IStateMedicalAct {
   list: IMedicalAct[];

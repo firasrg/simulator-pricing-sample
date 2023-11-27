@@ -1,6 +1,6 @@
-import { IGuarantee } from './IGuarantee';
+import { IGuarantee } from '@forms/guarantee/reducer';
 
 export interface GuaranteeFormProps {
   onSubmit: (guarantee: IGuarantee) => void;
-  existingMedicalActs: string[]; // List of existing medical acts
+  existingMedicalActs: string[];
 }

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@app-redux/models';
 import { clearData } from '@app-redux/slices/authSlice';
-import { IGuarantee } from '@models/IGuarantee';
+import { IGuarantee } from '@forms/guarantee/reducer';
 
 interface IStateGuarantee {
   list: IGuarantee[];

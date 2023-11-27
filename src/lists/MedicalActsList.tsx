@@ -1,17 +1,9 @@
+import React from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import React from 'react';
-
-export interface IMedicalAct {
-  family: string;
-  name: string;
-  code: string;
-}
-interface MedicalActListProps {
-  medicalActs: IMedicalAct[];
-}
+import { MedicalActListProps } from '@models/MedicalActListProps';
 
 const MedicalActList: React.FC<MedicalActListProps> = ({ medicalActs }) => {
   return (

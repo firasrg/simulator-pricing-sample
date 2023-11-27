@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import Typography from '@mui/material/Typography';
 
 interface ProcessStepTypeInsuredProps {
   onChange: (selectedOptions: string[]) => void;
@@ -21,22 +22,17 @@ const ProcessStepTypeInsured: React.FC<ProcessStepTypeInsuredProps> = ({ onChang
 
   return (
     <div>
+      <Typography variant="h6" gutterBottom>
+        Who do you want to insure?
+      </Typography>
       <FormGroup>
         <FormControlLabel
-          control={
-            <Checkbox
-              checked={selectedOptions.includes('me')}
-              onChange={() => handleCheckboxChange('me')}
-            />
-          }
+          control={<Checkbox checked={selectedOptions.includes('me')} onChange={() => handleCheckboxChange('me')} />}
           label="Me"
         />
         <FormControlLabel
           control={
-            <Checkbox
-              checked={selectedOptions.includes('partner')}
-              onChange={() => handleCheckboxChange('partner')}
-            />
+            <Checkbox checked={selectedOptions.includes('partner')} onChange={() => handleCheckboxChange('partner')} />
           }
           label="My Partner"
         />

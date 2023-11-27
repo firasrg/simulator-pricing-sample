@@ -5,19 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-
-export interface IProduct {
-  name: string;
-  description: string;
-  currency: string;
-  zone: string;
-  guarantees: string[];
-}
-
-interface ProductFormProps {
-  onSubmit: (product: IProduct) => void;
-  existingGuarantees: string[]; // List of existing guarantees
-}
+import { ProductFormProps } from '@models/ProductFormProps';
 
 const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, existingGuarantees }) => {
   const [name, setName] = useState('');
@@ -39,6 +27,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, existingGuarantees 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       <TextField
+        required
         fullWidth
         label="Product Name"
         variant="outlined"
@@ -59,14 +48,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, existingGuarantees 
         value={currency}
         onChange={(e) => setCurrency(e.target.value)}
       />
-      <TextField
-        fullWidth
-        label="Zone"
-        variant="outlined"
-        value={zone}
-        onChange={(e) => setZone(e.target.value)}
-      />
-      <FormControl fullWidth variant="outlined" style={{ marginTop: '10px' }}>
+      <TextField fullWidth label="Zone" variant="outlined" value={zone} onChange={(e) => setZone(e.target.value)} />
+      <FormControl fullWidth variant="outlined" style={{ marginTop: '10px' }} required>
         <InputLabel id="guarantees-label">Select Guarantees</InputLabel>
         <Select
           label="Select Guarantees"
