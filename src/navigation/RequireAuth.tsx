@@ -1,11 +1,7 @@
-import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { useAuth } from '../hooks/useAuth';
-
-export interface IRequireAuthProps {
-  child?: ReactNode;
-}
+import { IRequireAuthProps } from '@models/IRequireAuthProps';
 
 export default function RequireAuth({ child }: IRequireAuthProps) {
   const auth = useAuth();
